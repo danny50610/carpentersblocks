@@ -319,9 +319,25 @@ public class EventHandler {
             event.name = Blocks.planks.stepSound.getStepResourcePath();
 
             // If covered, change resource to cover's SoundType
-            TEBase TE = (TEBase) event.entity.worldObj.getTileEntity(x, y, z);
-            if (TE != null)
+            TileEntity tileEntity = event.entity.worldObj.getTileEntity(x, y, z);
+            
+            /* Sometime get mods.railcraft.common.blocks.hidden.TileHidden, I don't know why.
+             * Place a carpenter's block, walk around on it.
+             * Then, use TConstruct new projection weapon attack block.
+             */
+            
+            /* list: 
+             * Carpenter's Blocks v3.3.4.4 - MC 1.7.10.jar
+             * Mantle-1.7.10-0.3.2.jar
+             * Railcraft_1.7.10-9.4.0.0.jar
+             * TConstruct-1.7.10-1.8.2a.jar
+             */
+            
+            // So, Add 'if' to prevent crash.
+            if (tileEntity instanceof TEBase)
             {
+                TEBase TE = (TEBase) tileEntity;
+                
                 Block cover = BlockProperties.toBlock(BlockProperties.getCoverSafe(TE, 6));
                 if (!(cover instanceof BlockCoverable))
                 {
